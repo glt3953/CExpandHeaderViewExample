@@ -8,6 +8,7 @@
 
 #import "CustomHeadViewController.h"
 #import "CExpandHeader.h"
+#import "SDCycleScrollView.h"
 
 @interface CustomHeadViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
@@ -49,7 +50,18 @@
     [label setTextColor:[UIColor redColor]];
     [customView addSubview:label];
     
-    _header = [CExpandHeader expandWithScrollView:_tableVIew expandView:customView];
+    
+    CGRect bounds = [[UIScreen mainScreen] bounds];
+    bounds.size.height = 200;
+    SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:bounds imagesGroup:nil];
+    cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
+    cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleNone;
+    cycleScrollView.placeholderImage = [UIImage imageNamed:@"imageLoading"];
+    cycleScrollView.placeholderImageContentMode = UIViewContentModeCenter;
+    cycleScrollView.autoScroll = NO;
+    NSArray *localizationImagesGroup = @[[UIImage imageNamed:@"defaultRoomPic.jpg"], [UIImage imageNamed:@"houseContract.jpg"], [UIImage imageNamed:@"housePermit.jpg"], [UIImage imageNamed:@"image.png"]];
+    cycleScrollView.localizationImagesGroup = localizationImagesGroup;
+    _header = [CExpandHeader expandWithScrollView:_tableVIew expandView:cycleScrollView];
 
 }
 
